@@ -76,7 +76,7 @@ bash Scripts/bash/csv_to_postgresql_load.sh
 
 ## SQL queries
 
-See `Scripts/SQL` for the SQL files that answer the requested queries.
+See ![SQL Scripts](Scripts/SQL) for the SQL files that answer the requested queries.
 
 * query_1.sql -> Orders where gloss_qty or poster_qty > 4000
 * query_2.sql -> Orders where standard_qty = 0 AND (gloss_qty or poster_qty > 1000)
