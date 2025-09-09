@@ -1,0 +1,9 @@
+# .gitignore
+*.csv
+*.CSV
+*.json
+*.JSON
+*.log
+raw/
+Transformed/
+Gold/
