@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# ETL Bash Script
+# CSV Files move
 # Author: Lateef Akinola
 # Date: 2025-09-04
 # Description: This script moves all .csv and .json files from SOURCE_DIR (or current dir by default)
