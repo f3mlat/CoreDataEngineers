@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copies CSV files into a database
+# CSV files copy into a database
 # Author: Lateef Akinola
 # Date: 2025-09-04
 # Description: This script copies each of the CSV files into a PostgreSQL database
