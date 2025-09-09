@@ -15,7 +15,7 @@ This repository contains Bash scripts to perform a simple ETL process, move JSON
 
 ## Files
 
-See `Scripts/Bash` and `Scripts/SQL`.
+See ![Bash Scripts](Scripts/Bash) and ![SQL Scripts](Scripts/SQL).
 
 ## ETL Architecture
 
