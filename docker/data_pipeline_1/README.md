@@ -13,27 +13,6 @@ This repository contains Dockerfile, Bash & Python scripts to perform a simple E
 - Python
 - git
 
-## Files
-
-See
-
-* !(./Dockerfile)
-
-* !(requirements.txt)
-
-* !(extract.py)
-
-* !(load.py)
-
-* !(transform.py)
-
-* !(run_etl_pipeline.py)
-
-* !(export_var.sh)
-
-* !(run_pipeline.sh)
-
-
 ## How to run pipeline
 ```shell
 bash run_pipepline.sh
