@@ -17,7 +17,7 @@ This repository contains Dockerfile, Bash & Python scripts to perform a simple E
 
 See
 
-* !(Dockerfile)
+* !(./Dockerfile)
 
 * !(requirements.txt)
 
@@ -34,7 +34,7 @@ See
 * !(run_pipeline.sh)
 
 
-** How to run pipeline
+## How to run pipeline
 ```shell
 bash run_pipepline.sh
 ```
