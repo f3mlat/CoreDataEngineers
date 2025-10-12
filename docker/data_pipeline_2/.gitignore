@@ -1,0 +1,49 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+
+# --- Virtualenv ---
+venv/
+env/
+.venv/
+
+# --- CSV & Data Files ---
+*.csv
+raw/
+data/
+downloads/
+
+# --- Logs ---
+*.log
+logs/
+tmp/
+*.tmp
+
+# --- DBT ---
+dbt/target/
+dbt/logs/
+dbt/.user.yml
+
+# --- Docker ---
+*.pid
+*.sock
+
+# --- VSCode / IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+
+# --- Postgres ---
+pg_data/
+db_data/
+
+# --- Secrets ---
+.env.local
+.env.staging

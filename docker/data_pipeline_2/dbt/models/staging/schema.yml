@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: staging
+    database: dwDB
+    schema: public
+    tables:
+      - name: staging_finance
+
+models:
+  - name: stg_finance
+    description: "Cleaned staging table for finance data"
