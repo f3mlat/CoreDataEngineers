@@ -65,7 +65,7 @@ This will:
 
 You can connect to Postgres locally:
 
-psql -h localhost -U user -d posey
+psql -h localhost -U user -d <database_name>
 
 ### 3. Schedule Daily Run
 
