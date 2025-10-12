@@ -80,7 +80,7 @@ Edit crontab with crontab -e and add:
 
 This ensures the pipeline runs every midnight.
 
-### Dockerized ETL Lifecycle
+### Summarized Dockerized ETL Lifecycle
 1. **Extract (Python)** → download and clean data
 2. **Load (Postgres)** → save to staging database
 3. **Transform (dbt)** → create analytics-ready models
