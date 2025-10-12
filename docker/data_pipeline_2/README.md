@@ -12,7 +12,7 @@ The pipeline is scheduled to run **daily at 12:00 a.m.** using a cron job.
 
 
 ## 🏗 Architecture
-
+![Pipeline Architecture](diagrams/pipeline_architecture.PNG)
 
 
 ## 📂 Project Structure
