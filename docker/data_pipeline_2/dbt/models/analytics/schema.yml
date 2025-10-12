@@ -1,0 +1,5 @@
+version: 2
+
+models:
+  - name: dim_finance_summary
+    description: "Agregrated financial data"

@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  etl:
+    build: ./etl
+    container_name: etl_service
+    environment:
+      CSV_URL: ${CSV_URL}
+      PG_HOST: ${POSTGRES_HOST}
+      PG_PORT: ${POSTGRES_PORT}
+      PG_DB: ${POSTGRES_DB}
+      PG_USER: ${POSTGRES_USER}
+      PG_PASS: ${POSTGRES_PASSWORD}
+      PG_TABLE: ${DB_TABLE}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  dbt:
+    build: ./dbt
+    container_name: dbt_service
+    environment:
+      DBT_PROFILES_DIR: /dbt
+      PG_HOST: ${POSTGRES_HOST}
+      PG_PORT: ${POSTGRES_PORT}
+      PG_DB: ${POSTGRES_DB}
+      PG_USER: ${POSTGRES_USER}
+      PG_PASS: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./dbt:/dbt
+    depends_on:
+      etl:
+        condition: service_completed_successfully
+
+volumes:
+  db_data:

@@ -1,0 +1,14 @@
+name: "finance_project"
+version: "1.0.0"
+
+profile: "finance_profile"
+
+# Where DBT will look for models
+model-paths: ["models"]
+
+models:
+  finance_project:
+    staging:
+      materialized: table
+    analytics:
+      materialized: table
