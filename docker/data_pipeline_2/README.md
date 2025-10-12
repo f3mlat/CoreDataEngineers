@@ -1,7 +1,7 @@
-## Dockerized ELT Pipeline – CoreDataEngineers
+## Dockerized ELT Pipeline
 ### 📌Overview
 
-This project demonstrates a fully managed ELT pipeline using Docker.
+This project demonstrates a fully automated ELT pipeline using Docker.
 The pipeline consists of three containers/services:
 
 1. **Python (ETL)** → Extracts CSV data from a URL and loads it into Postgres.
