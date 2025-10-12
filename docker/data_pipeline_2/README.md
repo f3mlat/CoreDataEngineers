@@ -22,8 +22,6 @@ The pipeline is scheduled to run **daily at 12:00 a.m.** using a cron job.
 │   ├── dbt_project.yml
 │   ├── Dockerfile
 │   ├── export_var.sh
-│   ├── logs
-│   │   └── dbt.log
 │   ├── models
 │   │   ├── analytics
 │   │   │   ├── dim_finance_summary.sql
