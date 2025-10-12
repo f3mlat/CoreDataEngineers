@@ -48,18 +48,23 @@ The pipeline is scheduled to run **daily at 12:00 a.m.** using a cron job.
 ```
 
 ## ⚙️ Prerequisites
-- Docker & Docker Compose installed
+- Linux environment
+- Bash shell
+- Docker Docker & Docker Compose
+- Python
+- git
 - PostgreSQL client (optional, for testing)
 
 
 ## 🚀 Running the Pipeline
 ### 1. Build & Start Containers
+```shell
 source scripts/run_pipeline.sh
-
+```
 This will:
-- Start Postgres container
-- Start and run the Python ETL container (extract + load)
-- Start and run DBT container (transform data)
+- Starts Postgres container
+- Starts and run the Python ETL container (extract + load)
+- Starts and run DBT container (transform data)
 
 ### 2. Verify Data
 
@@ -74,3 +79,11 @@ Edit crontab with crontab -e and add:
 0 0 \* \* \* /home/l/etl-pipeline-docker/scripts/run_pipeline.sh >> /home/l/etl-pipeline-docker/logs/pipeline.log 2>&1
 
 This ensures the pipeline runs every midnight.
+
+### Dockerized ETL Lifecycle
+1. **Extract (Python)** → download and clean data
+2. **Load (Postgres)** → save to staging database
+3. **Transform (dbt)** → create analytics-ready models
+4. **Schedule (cron)** → run daily automatically
+
+
