@@ -16,7 +16,34 @@ The pipeline is scheduled to run **daily at 12:00 a.m.** using a cron job.
 
 
 ## 📂 Project Structure
-
+.
+├── dbt
+│   ├── dbt_project.yml
+│   ├── Dockerfile
+│   ├── export_var.sh
+│   ├── logs
+│   │   └── dbt.log
+│   ├── models
+│   │   ├── analytics
+│   │   │   ├── dim_finance_summary.sql
+│   │   │   └── schema.yml
+│   │   └── staging
+│   │       ├── schema.yml
+│   │       └── stg_finance.sql
+│   └── profiles.yml
+├── docker-compose.yaml
+├── etl
+│   ├── Dockerfile
+│   ├── etl.py
+│   ├── extract_data.py
+│   ├── load_data.py
+│   ├── requirements.txt
+│   └── run_etl.sh
+├── raw.csv
+├── README.md
+└── scripts
+    ├── export_var.sh
+    └── run_pipeline.sh
 
 
 ## ⚙️ Prerequisites
