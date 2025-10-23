@@ -65,11 +65,11 @@ wikipedia_pageviews_pipeline/
         airflow webserver --port 8080
         airflow scheduler
         ```
-    - Access the Airflow UI at ==http://localhost:8080== (default credentials: ==admin/admin== if not changed).
+    - Access the Airflow UI at `http://localhost:8080`(default credentials: `admin/admin` if not changed).
 
 4. **Configure DAG**
-    - Copy the==wikipedia_pageviews_pipeline/== folder to your Airflow DAGs directory (e.g., ==~/airflow/dags/==).
-    - Ensure the ==config/== and ==utils/== directories are accessible (e.g., in the same folder for the dag in this case ==wikipedia_pageviews_pipeline/==).
+    - Copy the `wikipedia_pageviews_pipeline/` folder to your Airflow DAGs directory (e.g., `~/airflow/dags/`).
+    - Ensure the `config/` and `utils/` directories are accessible (e.g., in the same folder for the dag in this case `wikipedia_pageviews_pipeline/` ).
 
 ## Usage
 ### Running the Pipeline
@@ -77,7 +77,7 @@ wikipedia_pageviews_pipeline/
 - **Trigger the DAG Manually**
     Via Airflow UI:
     - Navigate to http://localhost:8080
-    - Find the DAG: ==wikipedia_pageviews_pipeline==
+    - Find the DAG:  wikipedia_pageviews_pipeline
     - Toggle it ON
     - Click the "Trigger DAG" button
 
@@ -86,19 +86,19 @@ wikipedia_pageviews_pipeline/
     airflow dags trigger wikipedia_pageviews_pipeline --conf '{"year": "2025", "month": "10", "day": "22", "hour": "16"}'
     ```
 
-    - ==year==, ==month==, ==day==, ==hour==: Specify the date and hour (24-hour format) for which to process data (e.g., October 22, 2025, 16:00 UTC).
+    -  `year`, `month`, `day`, `hour`: Specify the date and hour (24-hour format) for which to process data (e.g., October 22, 2025, 16:00 UTC).
 
 - **Monitor Execution**
-    - Check the Airflow UI for task status (e.g., ==download_gz==, ==extract_gz==, ==parse_and_load==).
-    - Logs are available in the UI or at ==~/airflow/logs/==.
+    - Check the Airflow UI for task status (e.g., `download_gz`, `extract_gz`, `parse_and_load`).
+    - Logs are available in the UI or at `~/airflow/logs/`.
 
 ## Database
-- Data is stored in ==tmp/database/pageviews.db== (SQLite).
+- Data is stored in `tmp/database/pageviews.db`(SQLite).
 - Schema:
-    - ==timestamp== (TEXT): Date and time of the hour (e.g., '2025-10-22 16:00:00').
-    - ==page_title== (TEXT): Wikipedia page title (e.g., 'Google').
-    - ==views== (INTEGER): Total pageviews for that hour.
-    - Unique constraint on ==(timestamp, page_title)== ensures idempotence.
+    -  `timestamp`(TEXT): Date and time of the hour (e.g., '2025-10-22 16:00:00').
+    -  `page_title`(TEXT): Wikipedia page title (e.g., 'Google').
+    -  `views`(INTEGER): Total pageviews for that hour.
+    - Unique constraint on `(timestamp, page_title)` ensures idempotence.
 
 ## Analysis
 After the pipeline runs successfully, query the database to find the company with the highest pageviews:
@@ -109,7 +109,7 @@ WHERE timestamp = '2025-10-22 16:00:00'
 ORDER BY views DESC
 LIMIT 1;
 ```
-- Use any SQLite client (e.g., ==sqlite3 tmp/database/pageviews.db)== to execute the query.
+- Use any SQLite client (e.g. `sqlite3 tmp/database/pageviews.db`)  to execute the query.
 
 ## Example Output
 For illustration (using daily data from October 01, 2024, as hourly dumps aren't directly summarizable):
@@ -125,9 +125,9 @@ For illustration (using daily data from October 01, 2024, as hourly dumps aren't
 
 ## Development
 ### Modularity
- - **Config**: Edit ==config/config.py== to update company lists or paths.
- - **Utils**: Extend ==utils/download.py== and ==utils/load.py== for additional functionality.
- - **DAG**: Modify ==wikipedia_pageviews_dag.py== to add tasks or change workflow.
+ - **Config**: Edit `config/config.py` to update company lists or paths.
+ - **Utils**: Extend `utils/download.py` and `utils/load.py `for additional functionality.
+ - **DAG**: Modify `wikipedia_pageviews_dag.py` to add tasks or change workflow.
 
 ### Testing
  - Test utilities independently:
@@ -139,12 +139,12 @@ For illustration (using daily data from October 01, 2024, as hourly dumps aren't
 
 ### Scaling
  - For larger datasets, replace SQLite with PostgreSQL.
- - Instead of local ==tmp/==, use cloud storage such as S3 for file storage
+ - Instead of local `tmp/`, use cloud storage such as S3 for file storage
  - For multiple hours/days, employ parallel processing
 
 ## Notes
  - **Data Availability**: As of October 23, 2025, 09:00 CDT, hourly dumps may yet be available. Use historical data (e.g., 2024) for testing.
- - **Error Handling**: The pipeline includes ==3 retries== with a ==5-minute delay==.
+ - **Error Handling**: The pipeline includes  3 retries  with a  5-minute delay .
  - **Cleanup**: Temporary files are removed after processing.
 
 ## Acknowledgments
