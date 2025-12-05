@@ -1,0 +1,12 @@
+version: 2
+
+sources:
+  - name: staging
+    database: onyx-cosmos-480018-k1
+    schema: coretelecoms_capstone_datawarehouse
+    tables:
+      - name: customers
+      - name: call_center
+      - name: social_media
+      - name: web_complaints
+      - name: agents

@@ -1,0 +1,34 @@
+sources:
+  customers:
+    type: s3_csv
+    bucket: core-telecoms-data-lake
+    key: customers/customers_dataset.csv
+    frequency: static
+    destination_path: gs://coretelecoms-capstone-datalake
+
+  call_center_logs:
+    type: s3_csv
+    bucket: core-telecoms-data-lake
+    key: call logs/call_logs_day_{ds}.csv
+    frequency: daily
+    destination_path: gs://coretelecoms-capstone-datalake
+
+  social_media:
+    type: s3_json
+    bucket: core-telecoms-data-lake
+    key: social_medias/media_complaint_day_{ds}.json
+    frequency: daily
+    destination_path: gs://coretelecoms-capstone-datalake
+
+  web_complaints:
+    type: postgres
+    query: SELECT * FROM customer_complaints.web_form_request_{ds_nodash}
+    frequency: daily
+    destination_path: gs://coretelecoms-capstone-datalake
+
+  agents:
+    type: google_sheet
+    spreadsheet_id: 1GrZvmHh9m20lwjSIFiZsVHTmpb884TmxqF8AuTaHIYo
+    range: Sheet1
+    frequency: static
+    destination_path: gs://coretelecoms-capstone-datalake
