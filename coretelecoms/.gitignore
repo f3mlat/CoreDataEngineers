@@ -1,4 +1,7 @@
 __pycache__/
+*.pyc
+*.pyo
+*.pyd
 *.py[cod]
 *$py.class
 *.so
@@ -20,7 +23,7 @@ htmlcov/
 .nox/
 *.cover
 .hypothesis/
-.parcel-cache/
+.parcel-cache
 
 airflow/airflow.db
 airflow/logs/
