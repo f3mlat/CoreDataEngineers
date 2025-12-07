@@ -25,15 +25,21 @@ The platform supports:
 ```
                 ┌──────────────────────────┐
                 │ Upstream Telecom Sources │
+                │ - From AWS S3            │
+                │ - PosegreSQL database    │
+                │ - From Google sheet      │
                 └──────────────┬───────────┘
-                               ▼
-                  Google Cloud Storage (Datalake)
                                ▼
                 ┌──────────────────────────┐
                 │        Airflow DAGs      │
-                │  - Ingestion Pipelines   │
+                │  - Ingestion Pipeline    │
+                │  - Cloud Table creation  │
                 │  - dbt Run/Test/Docs     │
+                │  - Full Pipeline         │
                 └──────────────┬───────────┘
+                               ▼
+              Google Cloud Storage (Datalake)
+                               ┬
                                ▼
                 ┌──────────────────────────┐
                 │ BigQuery Data Warehouse  │
