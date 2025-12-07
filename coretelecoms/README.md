@@ -175,6 +175,7 @@ docker-compose up -d --build
 ```
 
 Airflow UI → **[http://localhost:8080](http://localhost:8080)**
+
 Credentials → `admin / admin`
 
 ---
@@ -195,14 +196,15 @@ Ingestion metadata lives in:
 dags/metadata/pipelines.yml
 ```
 
-Each dataset defines:
+Each dataset metadata defines:
 
-* source GCS path
-* BigQuery raw/datalake destination
-* file format
-* schema mapping
+* Type of source and storage - s3_csv, s3_json
+* Bucket of source in cloud storage
+* Key which details the folder_name/source_file_name
+* Frequency of source - static, daily
+* Destination path - GCS
 
-This enables **zero-code ingestion changes**.
+This enables **zero-code ingestion changes** and **scalability**.
 
 ---
 
