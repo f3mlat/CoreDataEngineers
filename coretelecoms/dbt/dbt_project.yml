@@ -6,7 +6,7 @@ profile: "coretelecoms_dbt"
 
 # Folders for project resources
 model-paths: ["models"]
-analysis-paths: ["analyses"]
+analysis-paths: ["analysis"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]

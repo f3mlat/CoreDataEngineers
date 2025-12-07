@@ -1,6 +1,6 @@
 resource "google_storage_bucket" "datalake" {
   name          = "${var.project_name}-datalake"
-  location      = var.location
+  location      = var.gcp_region
   force_destroy = true
 
 
@@ -16,5 +16,5 @@ resource "google_storage_bucket" "datalake" {
 
 resource "google_bigquery_dataset" "datawarehouse" {
   dataset_id = var.bigquery_dataset_id
-  location   = var.location
+  location   = var.gcp_region
 }
