@@ -1,5 +1,5 @@
 import pandas as pd
-from ingestion.extractors.metadata_append import add_metadata
+from src.ingestion.extractors.metadata_append import add_metadata
 import boto3
 
 def extract_csv(bucket, key):
@@ -18,6 +18,6 @@ def extract_json(bucket, key):
     df = pd.read_json(obj['Body'])
 
     # Clean column names
-    df.columns = [c.lower().replace(' ', '_').replace('-', '_') for c in df.columns]
+    df.columns = df.columns.str.strip().str.lower().str.replace(r"[^a-z0-9]+", "_", regex=True)
 
     return add_metadata(df)

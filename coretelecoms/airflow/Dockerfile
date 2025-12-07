@@ -23,10 +23,12 @@ RUN pip install --upgrade pip
 COPY airflow/requirements.txt /opt/airflow/requirements.txt
 RUN pip install --no-cache-dir -r /opt/airflow/requirements.txt
 
+COPY airflow/config/metadata.yml /opt/airflow/config/metadata.yml
+COPY .creds/coretelecoms.json /opt/airflow/.creds/coretelecoms.json
 # Copy DAGs, source code, and DBT project
-COPY airflow/dags /opt/airflow/dags
-COPY src /opt/airflow/src
-COPY dbt /opt/airflow/dbt
+COPY airflow/dags/. /opt/airflow/dags
+COPY src/. /opt/airflow/dags/src
+COPY dbt/. /opt/airflow/dbt
 
 # Set Python path
 ENV PYTHONPATH="/opt/airflow:${PYTHONPATH}"

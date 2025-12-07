@@ -1,34 +1,36 @@
 coretelecoms_dbt:
   target: prod
+
   outputs:
+
     dev:
       type: bigquery
       method: service-account
-      project: onyx-cosmos-480018-k1
-      dataset: coretelecoms_capstone_datawarehouse
+      project: "onyx-cosmos-480018-k1"
+      dataset: "coretelecoms_capstone_datawarehouse"
       threads: 8
-      keyfile: /dbt/.google/creds/coretelecoms.json
+      keyfile: "/opt/airflow/.creds/coretelecoms.json"
       timeout_seconds: 300
-      location: us-central1
-      priority: interactive
+      location: "us-central1"
+      priority: "interactive"
 
     prod:
       type: bigquery
       method: service-account
-      project: onyx-cosmos-480018-k1
-      dataset: coretelecoms_capstone_datawarehouse
+      project: "onyx-cosmos-480018-k1"
+      dataset: "coretelecoms_capstone_datawarehouse"
       threads: 16
-      keyfile: /dbt/.google/creds/coretelecoms.json
+      keyfile: "/opt/airflow/.creds/coretelecoms.json"
       timeout_seconds: 600
-      location: us-central1
-      priority: batch
+      location: "us-central1"
+      priority: "batch"
       retries: 3
 
     ci:
       type: bigquery
       method: service-account
-      project: onyx-cosmos-480018-k1
-      dataset: coretelecoms_capstone_datawarehouse
+      project: "onyx-cosmos-480018-k1"
+      dataset: "coretelecoms_capstone_datawarehouse"
       threads: 4
-      keyfile: /dbt/.google/creds/coretelecoms.json
-      location: us-central1
+      keyfile: "/opt/airflow/.creds/coretelecoms.json"
+      location: "us-central1"

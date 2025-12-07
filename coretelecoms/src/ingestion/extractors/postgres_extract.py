@@ -2,7 +2,7 @@ import logging
 import boto3
 import pandas as pd
 import psycopg2
-from ingestion.extractors.metadata_append import add_metadata
+from src.ingestion.extractors.metadata_append import add_metadata
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -30,17 +30,17 @@ def extract_db(query):
 
     # Establish a connection to the PostgreSQL database
     conn = psycopg2.connect(
-        host=postgres_host,         # Or the IP address/hostname of your PostgreSQL server
+        host=postgres_host,
         database=postgres_db,
         user=postgres_user,
         password=postgres_password,
-        port=postgres_port              # Default PostgreSQL port
+        port=postgres_port
     )
 
     # Execute a sample query
     df = pd.read_sql(query, conn)
 
     # Clean column names
-    df.columns = [c.lower().replace(' ', '_').replace('-', '_') for c in df.columns]
+    df.columns = df.columns.str.strip().str.lower().str.replace(r"[^a-z0-9]+", "_", regex=True)
 
     return add_metadata(df)

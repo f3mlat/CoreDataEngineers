@@ -6,7 +6,7 @@ sources:
     schema: coretelecoms_capstone_datawarehouse
     tables:
       - name: customers
-      - name: call_center
+      - name: call_center_logs
       - name: social_media
       - name: web_complaints
       - name: agents

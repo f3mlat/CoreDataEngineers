@@ -13,17 +13,16 @@ default_args = {
 }
 
 with DAG(
-    'metadata_ingestion_dag',
+    'coretelecoms_source_ingestion',
     description='DAG to ingest all sources based on metadata.yaml with date parameters',
-    start_date=datetime(2025, 12, 04),
-    schedule_interval=None,  # Can be set to '@daily' if desired
+    start_date=datetime(2025, 12, 4),
     catchup=False,
     default_args=default_args,
     tags=['coretelecoms', 'ingestion']
 ) as dag:
 
     # Load sources from metadata
-    with open('/opt/airflow/config/metadata.yaml') as f:
+    with open('/opt/airflow/config/metadata.yml') as f:
         metadata = yaml.safe_load(f)
     sources = metadata.get('sources', {})
 
@@ -38,6 +37,5 @@ with DAG(
                 # These can come from DAG run configuration
                 'from_date': "{{ dag_run.conf.get('from_date', None) }}",
                 'to_date': "{{ dag_run.conf.get('to_date', None) }}"
-            },
-            provide_context=True
+            }
         )

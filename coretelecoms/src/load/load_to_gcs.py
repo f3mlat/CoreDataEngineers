@@ -2,8 +2,7 @@ from google.cloud import storage
 from google.oauth2 import service_account
 import pyarrow as pa
 import pyarrow.parquet as pq
-import os
-from utils.gcp_client import get_gcs_client
+from src.utils.gcp_client import get_gcs_client
 
 def write_parquet_to_gcs(df, gcs_path):
     """

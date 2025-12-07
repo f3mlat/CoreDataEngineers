@@ -1,27 +1,32 @@
-name: coretelecoms_dbt
-version: 1.0.0
+name: "coretelecoms_dbt"
+version: "1.0.0"
 
+# Link this project to the correct dbt profile
+profile: "coretelecoms_dbt"
+
+# Folders for project resources
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
 
+# Target directory for compiled SQL
 target-path: "target"
+
+# Directories removed on `dbt clean`
 clean-targets:
   - "target"
   - "dbt_packages"
 
-models:
-  coretelecoms_dbt:
-    staging:
-      +materialized: view
-      +schema: staging
-    intermediate:
-      +materialized: table
-      +schema: intermediate
-    datawarehouse:
-      +materialized: table
-      +schema: datawarehouse
-      +partition_by: date(ingestion_date)
-      +cluster_by: ["customer_id", "issue_type"]
+# Model configurations by folder
+models:  
+  staging:
+    +materialized: view
+    +schema: staging
+  intermediate:
+    +materialized: table
+    +schema: intermediate
+  datawarehouse:
+    +materialized: table
+    +schema: datawarehouse

@@ -11,3 +11,5 @@ gspread==6.1.2
 PyYAML==6.0.1
 paramiko>=2.11
 apache-airflow-providers-dbt-cloud
+dbt-core
+dbt-bigquery

@@ -1,11 +1,11 @@
-from ingestion.extractors.metadata_append import add_metadata
+from src.ingestion.extractors.metadata_append import add_metadata
 import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
 
 def extract_sheet(spreadsheet_id, worksheet_name):
     scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-    creds = Credentials.from_service_account_file("/opt/.google/creds/coretelecoms.json", scopes=scopes)
+    creds = Credentials.from_service_account_file("/opt/airflow/.creds/coretelecoms.json", scopes=scopes)
 
     client = gspread.authorize(creds)
 
@@ -16,6 +16,6 @@ def extract_sheet(spreadsheet_id, worksheet_name):
     df = pd.DataFrame(data)
 
     # Clean column names
-    df.columns = [c.lower().replace(' ', '_').replace('-', '_') for c in df.columns]
+    df.columns = df.columns.str.strip().str.lower().str.replace(r"[^a-z0-9]+", "_", regex=True)
 
     return add_metadata(df)

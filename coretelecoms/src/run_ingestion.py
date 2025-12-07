@@ -1,10 +1,8 @@
-import yaml
-import pandas as pd
 from datetime import datetime, timedelta
-from ingestion.extractors.s3_extract import extract_csv, extract_json
-from ingestion.extractors.google_sheets_extract import extract_sheet
-from ingestion.extractors.postgres_extract import extract_db
-from load.load_to_gcs import write_parquet_to_gcs
+from src.ingestion.extractors.s3_extract import extract_csv, extract_json
+from src.ingestion.extractors.google_sheets_extract import extract_sheet
+from src.ingestion.extractors.postgres_extract import extract_db
+from src.load.load_to_gcs import write_parquet_to_gcs
 
 def ingest_source(source_name: str = None, config: str = None,from_date: str = None, to_date: str = None, **context):
     """
@@ -32,41 +30,64 @@ def ingest_source(source_name: str = None, config: str = None,from_date: str = N
     extractor_map = {
         's3_csv': lambda date: extract_csv(config['bucket'], config['key'].format(ds=date)),
         's3_json': lambda date: extract_json(config['bucket'], config['key'].format(ds=date)),
-        'postgres': lambda date: extract_db(config['query'].format(ds_nodash=date.replace('-', ''))),
+        'postgres': lambda date: extract_db(config['query'].format(ds_nodash=date.replace('-', '_'))),
         'google_sheet': lambda _: extract_sheet(config['spreadsheet_id'], config['range'])
     }
 
-    # iterate over the date range for incremental loads
-    current_dt = start_dt
-    while current_dt <= end_dt:
-        date_str = current_dt.strftime("%Y-%m-%d")
-        logging.info(f"Extracting data for {source_name} on {date_str}")
+    if config['frequency'] == 'daily':
+        # iterate over the date range for incremental loads
+        current_dt = start_dt
+        while current_dt <= end_dt:
+            date_str = current_dt.strftime("%Y-%m-%d")
+            logging.info(f"Extracting data for {source_name} on {date_str}")
 
+            try:
+                if config['type'] in ['s3_csv', 's3_json', 'postgres']:
+                    df = extractor_map[config['type']](date_str)
+                else:
+                    df = extractor_map[config['type']](None)
+
+                if df.empty:
+                    logging.warning(f"No data extracted for {source_name} on {date_str}")
+                else:
+                    # Construct GCS path
+                    gcs_output = (
+                        f"{config['destination_path']}/"
+                        f"{source_name}/"
+                        f"{source_name}_{date_str}.parquet"
+                    )
+                    write_parquet_to_gcs(df, gcs_output)
+                    logging.info(f"{source_name} data successfully written to {gcs_output}")
+
+                    # Push to XCom
+                    if ti:
+                        ti.xcom_push(key=f"{source_name}_{date_str}_gcs_path", value=gcs_output)
+
+            except Exception as e:
+                logging.error(f"Error processing {source_name} for date {date_str}: {e}", exc_info=True)
+                raise
+
+            # Increment day
+            current_dt += timedelta(days=1)
+    else:
         try:
-            if config['type'] in ['s3_csv', 's3_json', 'postgres']:
-                df = extractor_map[config['type']](date_str)
-            else:
-                df = extractor_map[config['type']](None)
+            df = extractor_map[config['type']](None)
 
             if df.empty:
-                logging.warning(f"No data extracted for {source_name} on {date_str}")
+                logging.warning(f"No data extracted for {source_name}")
             else:
                 # Construct GCS path
                 gcs_output = (
                     f"{config['destination_path']}/"
                     f"{source_name}/"
-                    f"{source_name}_{date_str}.parquet"
+                    f"{source_name}.parquet"
                 )
                 write_parquet_to_gcs(df, gcs_output)
-                logging.info(f"{source_name} data successfully written to {gcs_output}")
 
+                logging.info(f"{source_name} data successfully written to {gcs_output}")
                 # Push to XCom
                 if ti:
-                    ti.xcom_push(key=f"{source_name}_{date_str}_gcs_path", value=gcs_output)
-
+                    ti.xcom_push(key=f"{source_name}_gcs_path", value=gcs_output)
         except Exception as e:
-            logging.error(f"Error processing {source_name} for date {date_str}: {e}", exc_info=True)
-            raise
-
-        # Increment day
-        current_dt += timedelta(days=1)
+                logging.error(f"Error processing {source_name}: {e}", exc_info=True)
+                raise

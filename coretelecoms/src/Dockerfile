@@ -10,11 +10,13 @@ RUN apt-get update && \
 WORKDIR /app
 
 # Copy only requirements first (caching)
-COPY src/ingestion/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY src/ingestion/requirements.txt /app
+RUN pip install --no-cache-dir -r /app/requirements.txt
 
 # Copy source code
-COPY src /app/src
+COPY src/. /app/src
+COPY .creds/credentials /app/.creds/credentials
+COPY .creds/coretelecoms.json /app/.creds/coretelecoms.json
 
 # Make script executable
 RUN chmod +x /app/src/run_ingestion.py
