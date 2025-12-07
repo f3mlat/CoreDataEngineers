@@ -5,7 +5,7 @@ from datetime import datetime
 with DAG(
     'coretelecoms_full_pipeline',
     schedule='0 3 * * *',
-    start_date=datetime(2025,11,18),
+    start_date=datetime(2025,12,7),
     catchup=True
 ) as dag:
 
