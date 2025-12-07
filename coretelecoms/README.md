@@ -154,6 +154,24 @@ cd coretelecoms
 
 ### **2. Create Service Account + Key**
 
+* For Amazon
+```bash
+aws configure
+```
+Enter the following details you creted from Amazon IAM
+```
+AWS_ACCESS_KEY_ID=<access_key>
+AWS_SECRET_ACCESS_KEY=<secret_key>
+```
+
+Place the key in:
+
+```
+.env file
+```
+
+
+* For Google Cloud
 ```bash
 gcloud iam service-accounts create airflow-sa \
   --display-name "Airflow Service Account"
