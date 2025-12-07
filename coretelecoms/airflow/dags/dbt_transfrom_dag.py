@@ -9,10 +9,6 @@ from airflow.task.trigger_rule import TriggerRule
 PROJECT_ID = "onyx-cosmos-480018-k1"
 DBT_PROJECT_DIR = "/opt/airflow/dbt/"
 DBT_PROFILES_DIR = "/opt/airflow/dbt"
-SEED_BUCKET = "coretelecoms-capstone-datalake"
-SEED_FILES = {
-    "agents": "agents/agents.parquet",
-}
 
 default_args = {
     "owner": "data-engineering",
@@ -51,7 +47,7 @@ with DAG(
     )
 
     # -------------------------------------------------------------------------
-    # Task 1: dbt Test
+    # Task 2: dbt Test
     # -------------------------------------------------------------------------
     dbt_test = BashOperator(
         task_id="dbt_test",
