@@ -4,7 +4,7 @@ from datetime import datetime
 
 with DAG(
     'coretelecoms_full_pipeline',
-    schedule='0 3 * * *',
+    #schedule='0 3 * * *',
     start_date=datetime(2025,12,7),
     catchup=True
 ) as dag:
@@ -13,8 +13,8 @@ with DAG(
         task_id="trigger_ingestion",
         trigger_dag_id="coretelecoms_source_ingestion",
         conf={
-            "from_date": "2025-12-01",
-            "to_date": "2025-12-07"
+            "from_date": "2025-11-20",
+            "to_date": "2025-11-23"
         }
     )
 
